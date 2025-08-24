@@ -1,0 +1,54 @@
+✅ Task-03: Text Generation with Markov Chains
+Explanation (Brief):
+
+A Markov Chain predicts the next word based on the current word.
+
+I used a sample text, split it into words, built a dictionary mapping each word to its possible next words, and then randomly generated new text.
+
+Each run can give different outputs since the next word is chosen randomly.
+
+Python Code:
+
+
+import random
+
+# Sample text data
+text = "Artificial intelligence is the future. Artificial intelligence is powerful. The future of technology is artificial intelligence."
+
+# Step 1: Tokenize text
+words = text.split()
+
+# Step 2: Build the Markov Chain dictionary
+markov_chain = {}
+for i in range(len(words) - 1):
+    curr_word = words[i]
+    next_word = words[i + 1]
+    if curr_word not in markov_chain:
+        markov_chain[curr_word] = []
+    markov_chain[curr_word].append(next_word)
+
+# Step 3: Generate text
+def generate_text(chain, length=10):
+    word = random.choice(list(chain.keys()))  # start with a random word
+    output = [word]
+    for _ in range(length - 1):
+        if word in chain:
+            word = random.choice(chain[word])
+            output.append(word)
+        else:
+            break
+    return " ".join(output)
+
+# Generate multiple outputs
+for i in range(3):
+    print(f"Output {i+1}: {generate_text(markov_chain, 12)}")
+
+Outputs:
+
+
+(Since it’s random, results differ each time)
+
+Output 1: Artificial intelligence is powerful. The future of technology is artificial
+Output 2: The future of technology is artificial intelligence is the future.
+Output 3: Intelligence is powerful. The future of technology is artificial intelligence
+
